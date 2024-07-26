@@ -1,0 +1,52 @@
+Bootstrap: localimage
+From: ./snap-based.sif
+
+%help
+  This container collects implementations of ALDENTE algorithms
+  requiring the [snap](https://snap.stanford.edu/) software 
+  package.
+
+  The executable will have the following entry point. 
+
+   - densemotifs
+
+  To execute an algorithm thus it is sufficient to run
+
+    apptainer run --app densemotifs ALDENTE.sif
+
+
+  A help page, is accessible by means of
+
+    apptainer run-help --app densemotifs ALDENTE.sif
+
+%files
+  snap-libs /usr/src/snap-libs
+
+%post
+  cd /usr/src/snap-libs
+  make
+  cd examples
+  make install
+
+  #####################################################################
+  #
+  # Entry point for densemotifs
+  #
+  #####################################################################
+%apphelp densemotifs
+  This is the entry point for the `densemotifs` executable.
+  List of parameters are: 
+  "-i:" the input temporal graph of triplets (u,v,t) in the format "u v t\n"
+  "-m:" the file corresponding to the temporal motif (see examples in snap-libs/examples/motifs)
+  "-delta:" upperbound on duration of each delta-instance of motif m
+  "-c:" value used for PRESTO-A, default is 1.25
+  "-lambda:" exponential decay (default is 2, i.e., no exp decay will be applied), set to <1 if you want to apply it
+  "-type:" algorithm that you want to use, 0 (exact enum motif instances), 1(GREEDY), 2 (BATCH), 3 (PROBPEEL), 4(EXACT), 5(HYBRIDPEEL) 
+  "-samp:" sample size $r$ to be used by ProbPeel or HybridPeel
+  "-ithyb:" number of iterations of ProbPeel inside HybridPeel
+  "-fol:" compute TMDS for all motifs in fol, each motif is treated independently (used to avoid reading large input graphs many times)
+  "-epsilon:" value of the parameter $xi$ for BATCH, ProbPeel and HybridPeel
+
+
+%apprun densemotifs
+  /usr/local/bin/denseMotifs $@

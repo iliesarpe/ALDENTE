@@ -1,0 +1,32 @@
+Bootstrap: docker
+From: ubuntu:jammy-20230301
+
+%files
+
+%post
+  apt-get update && apt-get install -y software-properties-common
+  add-apt-repository -y ppa:deadsnakes/ppa
+  apt-get update && apt-get install -y python3.6 python3-distutils python3-pip python3-apt
+  apt-get update
+  apt-get install -y \
+    git \
+    curl \
+    make \
+    cmake \
+    g++ \
+    libboost-all-dev \
+    libhdf5-dev
+    
+  # Install HighFive
+  cd /usr/src/
+  git clone https://github.com/BlueBrain/HighFive.git
+  cd HighFive
+  git checkout 4638084fc017f693e46d9349977044964f562daa
+  mkdir build && cd build
+  cmake .. -DHIGHFIVE_EXAMPLES=OFF
+  make install
+
+  # Install Json for modern C++
+  mkdir /usr/local/include/nlohmann
+  cd /usr/local/include/nlohmann
+  curl -O https://raw.githubusercontent.com/nlohmann/json/develop/single_include/nlohmann/json.hpp

@@ -1,0 +1,30 @@
+#
+# Makefile for non-Microsoft compilers
+#
+
+all: $(MAIN)
+
+# COMPILE
+$(MAIN): $(MAIN).cpp $(DEPH) $(DEPCPP) $(EXSNAP)/Snap.o 
+	$(CC) $(CXXFLAGS) \
+		-I$(HDF5) \
+		-I$(EXSNAP) \
+		-I$(EXSNAPADV) \
+		-I$(EXGLIB) \
+		-L$(HDF5LIB) \
+		-o $(MAIN) $(MAIN).cpp $(DEPCPP) $(EXSNAP)/Snap.o \
+		$(LDFLAGS) \
+		$(LIBS)
+
+# $(CC) $(CXXFLAGS) -o $(MAIN) $(MAIN).cpp $(DEPCPP) $(EXSNAP)/Snap.o -I$(EXSNAP) -I$(EXSNAPADV) -I$(EXGLIB) $(LDFLAGS) $(LIBS)
+# $(CC) $(CXXFLAGS) -o $(MAIN) $(MAIN).cpp $(DEPCPP) $(EXSNAP)/Snap.o -I$(EXSNAP) -I$(EXSNAPADV) -I$(EXGLIB) $(LDFLAGS) $(LIBS)
+
+install: $(MAIN)
+	cp $(MAIN) /usr/local/bin
+
+$(EXSNAP)/Snap.o: 
+	make -C $(EXSNAP)
+
+clean:
+	rm -f *.o $(MAIN) $(MAIN).exe
+	rm -r Debug Release
