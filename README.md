@@ -25,7 +25,8 @@ cd examples/densemotifs
 ```
 ## CONTAINER
 We now provide also a practical container that can be build trough [Apptainer](https://apptainer.org/) to avoid issues when building the code.
-To build the image just make sure that you have installer Apptainer and that it is properly working then run the following commands.
+
+To build the image just make sure that you have installed Apptainer on your system and that it is properly working, then simply run the following commands.
 
 ```
 # Build the base image of the OS
@@ -41,8 +42,10 @@ apptainer run --app densemotifs ALDENTE.sif
 apptainer run-help --app densemotifs ALDENTE.sif
 ```
 
+If you are not practical with Apptainer, you can check [this very simple guide](https://www.dei.unipd.it/~ceccarello/posts/apptainer-devenv/) provided by Prof. Matteo Ceccarello.
+
 ## Notes
 
-The code was tested on ubuntu versions of Ubuntu with OS > 18.04
+The code was tested on versions of Ubuntu with OS > 18.04
 If you experience problems with the JSON library, you can try to install it system-wide by following the guide:https://github.com/nlohmann/json
-
+No issues should occur when building the image trough Apptainer
