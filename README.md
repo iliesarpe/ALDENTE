@@ -47,5 +47,7 @@ If you are not practical with Apptainer, you can check [this very simple guide](
 ## Notes
 
 The code was tested on versions of Ubuntu with OS > 18.04
+
 If you experience problems with the JSON library, you can try to install it system-wide by following the guide:https://github.com/nlohmann/json
+
 No issues should occur when building the image trough Apptainer
